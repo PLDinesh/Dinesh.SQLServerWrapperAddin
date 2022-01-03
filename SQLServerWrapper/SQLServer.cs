@@ -51,24 +51,34 @@ namespace SQLServerWrapper
                 int iCurrentSheet = 0;
                 Excel.Application oXL;
                 Excel.Workbook oWB;
-                oXL = (Excel.Application)Marshal.GetActiveObject("Excel.Application");
+                oXL = (Excel.Application)Globals.ThisAddIn.Application;
                 oXL.Visible = true;
                 oWB = (Excel.Workbook)oXL.ActiveWorkbook;
 
-                Excel.Worksheet activeWorksheet = oWB.ActiveSheet;
+                Excel.Worksheet ActiveWorkSheet = Globals.ThisAddIn.Application.ActiveSheet;
+
+                Excel.Worksheet activeWorksheet = oWB.Worksheets.Add();
+
+
+                foreach (Excel.Worksheet sheet in oWB.Worksheets)
+                {
+
+                }
 
                 Excel.Workbook workbook = oWB;
-                Excel.Range firstRow = activeWorksheet.get_Range("A1");
-                firstRow.EntireRow.Insert(Excel.XlInsertShiftDirection.xlShiftDown);
+              //  Excel.Range firstRow = activeWorksheet.get_Range("A1");
+
+                //firstRow.EntireRow.Insert(Excel.XlInsertShiftDirection.xlShiftDown);
                 Excel.Range newFirstRow = activeWorksheet.get_Range("A1");
-                newFirstRow.Value2 = "This text was added by using code";
+                Object tmpValue = newFirstRow.Value2;
+                newFirstRow.Value2 = "This text will be deleted once the operation is completed";
 
                 foreach (DataTable dt in ds.Tables)
                 {
                     //Worksheet oSheet = oWB.Worksheets.Add();
                     // newWorksheet.impo
 
-                    Worksheet oSheet = oWB.Worksheets.Add(Type.Missing, activeWorksheet, 1, Type.Missing);
+                    Excel.Worksheet oSheet = oWB.Worksheets.Add();
 
                     object[,] rawData = new object[dt.Rows.Count + 1, dt.Columns.Count];
                     for (int col = 0; col < dt.Columns.Count; col++)
@@ -110,6 +120,9 @@ namespace SQLServerWrapper
 
 
                 }
+
+                newFirstRow.Value2 = "";
+                newFirstRow.Value2 = tmpValue;
             }
             catch (Exception ex)
             {
