@@ -186,6 +186,9 @@
     <EmbeddedResource Include="SetConnection.resx">
       <DependentUpon>SetConnection.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SetSQLQuery.resx">
+      <DependentUpon>SetSQLQuery.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SQLServer.resx">
       <DependentUpon>SQLServer.cs</DependentUpon>
     </EmbeddedResource>
@@ -203,6 +206,12 @@
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SetSQLQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetSQLQuery.Designer.cs">
+      <DependentUpon>SetSQLQuery.cs</DependentUpon>
     </Compile>
     <Compile Include="SQLServer.cs">
       <SubType>Component</SubType>

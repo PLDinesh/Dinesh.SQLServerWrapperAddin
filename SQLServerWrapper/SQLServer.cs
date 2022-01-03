@@ -1,4 +1,7 @@
 ﻿using Microsoft.Office.Tools.Ribbon;
+using Microsoft.Office.Tools.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+using Office = Microsoft.Office.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +9,7 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 using NLog;
+using System.Runtime.InteropServices;
 
 namespace SQLServerWrapper
 {
@@ -15,6 +19,7 @@ namespace SQLServerWrapper
         public string ConnectionString { get; set; }
         public string SQLQuery { get; set; }
         private SetConnection setConnection = null;
+        private SetSQLQuery setSQLQuery = null;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
@@ -22,6 +27,7 @@ namespace SQLServerWrapper
             try
             {
                 setConnection = new SetConnection();
+                setSQLQuery = new SetSQLQuery();
             }
             catch (Exception ex)
             {
@@ -34,7 +40,76 @@ namespace SQLServerWrapper
         {
             try
             {
+                SqlConnection sqlConnection = new SqlConnection(ConnectionString);
+                sqlConnection.Open();
+                SqlCommand cmd = sqlConnection.CreateCommand();
+                cmd.CommandText = SQLQuery;
+                cmd.CommandType = CommandType.Text;
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                sqlDataAdapter.Fill(ds);
+                int iCurrentSheet = 0;
+                Excel.Application oXL;
+                Excel.Workbook oWB;
+                oXL = (Excel.Application)Marshal.GetActiveObject("Excel.Application");
+                oXL.Visible = true;
+                oWB = (Excel.Workbook)oXL.ActiveWorkbook;
 
+                Excel.Worksheet activeWorksheet = oWB.ActiveSheet;
+
+                Excel.Workbook workbook = oWB;
+                Excel.Range firstRow = activeWorksheet.get_Range("A1");
+                firstRow.EntireRow.Insert(Excel.XlInsertShiftDirection.xlShiftDown);
+                Excel.Range newFirstRow = activeWorksheet.get_Range("A1");
+                newFirstRow.Value2 = "This text was added by using code";
+
+                foreach (DataTable dt in ds.Tables)
+                {
+                    //Worksheet oSheet = oWB.Worksheets.Add();
+                    // newWorksheet.impo
+
+                    Worksheet oSheet = oWB.Worksheets.Add(Type.Missing, activeWorksheet, 1, Type.Missing);
+
+                    object[,] rawData = new object[dt.Rows.Count + 1, dt.Columns.Count];
+                    for (int col = 0; col < dt.Columns.Count; col++)
+                    {
+                        rawData[0, col] = dt.Columns[col].ColumnName;
+                    }
+                    for (int col = 0; col < dt.Columns.Count; col++)
+                    {
+                        for (int row = 0; row < dt.Rows.Count; row++)
+                        {
+                            rawData[row + 1, col] = dt.Rows[row].ItemArray[col].ToString();
+                        }
+                    }
+                    string finalColLetter = string.Empty;
+                    string colCharset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    int colCharsetLen = colCharset.Length;
+
+                    if (dt.Columns.Count > colCharsetLen)
+                    {
+                        finalColLetter = colCharset.Substring(
+                            (dt.Columns.Count - 1) / colCharsetLen - 1, 1);
+                    }
+
+                    finalColLetter += colCharset.Substring(
+                            (dt.Columns.Count - 1) % colCharsetLen, 1);
+
+                    // Fast data export to Excel
+                    string excelRange = string.Format("A1:{0}{1}",
+                        finalColLetter, dt.Rows.Count + 1);
+
+                    //oSheet.get_Range(excelRange, Type.Missing).Style.NumberFormat = "@";
+                    oSheet.get_Range(excelRange, Type.Missing).Value2 = rawData;
+                    Excel.Range oRange = oSheet.get_Range(excelRange, Type.Missing);
+                    Excel.Style oStyle = (Excel.Style)oRange.Style;
+                    oStyle.NumberFormat = "@";
+                    Excel.Range oRng = oSheet.get_Range("A1", "IV1");
+                    oRng.EntireColumn.AutoFit();
+                    iCurrentSheet++;
+
+
+                }
             }
             catch (Exception ex)
             {
@@ -47,7 +122,7 @@ namespace SQLServerWrapper
         {
             try
             {
-                setConnection.Show();
+                setConnection.ShowDialog();
                 ConnectionString = setConnection.ConnectionString;
             }
             catch (Exception ex)
@@ -60,6 +135,20 @@ namespace SQLServerWrapper
         private void ShowMessage(string Message, string Caption, System.Windows.Forms.MessageBoxIcon messageBoxIcon)
         {
             System.Windows.Forms.MessageBox.Show(Message, Caption, System.Windows.Forms.MessageBoxButtons.OK, messageBoxIcon);
+        }
+
+        private void btnSetQuery_Click(object sender, RibbonControlEventArgs e)
+        {
+            try
+            {
+                setSQLQuery.ShowDialog();
+                SQLQuery = setSQLQuery.SQLQuery;
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal(ex, "Error occured when attempting to set connection string.");
+                ShowMessage("Error occured when attempting to set connection string.", "Error", System.Windows.Forms.MessageBoxIcon.Error);
+            }
         }
     }
 }

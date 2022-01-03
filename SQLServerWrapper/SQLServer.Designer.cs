@@ -68,6 +68,7 @@
             // 
             this.btnSetQuery.Label = "Edit / Set Query";
             this.btnSetQuery.Name = "btnSetQuery";
+            this.btnSetQuery.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSetQuery_Click);
             // 
             // btnRefreshData
             // 
