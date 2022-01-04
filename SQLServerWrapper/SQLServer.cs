@@ -17,7 +17,19 @@ namespace SQLServerWrapper
     {
 
         public string ConnectionString { get; set; }
-        public string SQLQuery { get; set; }
+        private string _connectionString;
+        public string SQLQuery
+        {
+            get
+            {
+
+                return _connectionString.Replace("GO", ";");
+            }
+            set
+            {
+                _connectionString = value;
+            }
+        }
         private SetConnection setConnection = null;
         private SetSQLQuery setSQLQuery = null;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
@@ -66,7 +78,8 @@ namespace SQLServerWrapper
                 }
 
                 Excel.Workbook workbook = oWB;
-              //  Excel.Range firstRow = activeWorksheet.get_Range("A1");
+                //  Excel.Range firstRow = activeWorksheet.get_Range("A1");
+                activeWorksheet.Select();
 
                 //firstRow.EntireRow.Insert(Excel.XlInsertShiftDirection.xlShiftDown);
                 Excel.Range newFirstRow = activeWorksheet.get_Range("A1");
