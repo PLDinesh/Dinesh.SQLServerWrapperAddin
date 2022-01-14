@@ -27,7 +27,13 @@ namespace SQLServerWrapper
         }
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            try
+            {
 
+            }catch(Exception ex)
+            {
+
+            }
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)

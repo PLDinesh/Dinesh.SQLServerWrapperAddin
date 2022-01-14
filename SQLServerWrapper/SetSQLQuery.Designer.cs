@@ -41,6 +41,7 @@
             this.btnParseSQL.TabIndex = 0;
             this.btnParseSQL.Text = "Parse SQL";
             this.btnParseSQL.UseVisualStyleBackColor = true;
+            this.btnParseSQL.Click += new System.EventHandler(this.btnParseSQL_Click);
             // 
             // textBox1
             // 
@@ -70,6 +71,7 @@
             this.Controls.Add(this.btnParseSQL);
             this.Name = "SetSQLQuery";
             this.Text = "SetSQLQuery";
+            this.Load += new System.EventHandler(this.SetSQLQuery_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

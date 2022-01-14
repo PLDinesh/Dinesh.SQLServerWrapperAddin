@@ -23,6 +23,11 @@ namespace SQLServerWrapper
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetConnection_Load(object sender, EventArgs e)
         {
             txtConnectionString.Text = "Server=(local);Initial Catalog=IVPPolaris;Integrated Security=true;Application Name=ExcelAddin";
@@ -30,6 +35,11 @@ namespace SQLServerWrapper
             btnTestConnection.Enabled = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTestConnection_Click(object sender, EventArgs e)
         {
             try
@@ -44,6 +54,11 @@ namespace SQLServerWrapper
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSetConnection_Click(object sender, EventArgs e)
         {
             try
