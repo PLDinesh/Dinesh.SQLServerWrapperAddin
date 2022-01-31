@@ -119,6 +119,8 @@ namespace SQLServerWrapper
                 //  Excel.Range firstRow = activeWorksheet.get_Range("A1");
                 activeWorksheet.Select();
 
+                SaveSettings();
+
                 //firstRow.EntireRow.Insert(Excel.XlInsertShiftDirection.xlShiftDown);
                 Excel.Range newFirstRow = activeWorksheet.get_Range("A1");
                 Object tmpValue = newFirstRow.Value2;
