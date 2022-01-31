@@ -35,7 +35,7 @@ namespace SQLServerWrapper
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
 
-        private void SaveSettings(string ConnectionString, string SQLQuery)
+        private void SaveSettings()
         {
             try
             {
@@ -77,7 +77,7 @@ namespace SQLServerWrapper
                 setConnection = new SetConnection();
                 setSQLQuery = new SetSQLQuery();
 
-
+                LoadSettings();
             }
             catch (Exception ex)
             {
@@ -207,6 +207,7 @@ namespace SQLServerWrapper
             {
                 setSQLQuery.ShowDialog();
                 SQLQuery = setSQLQuery.SQLQuery;
+                SaveSettings();
             }
             catch (Exception ex)
             {
