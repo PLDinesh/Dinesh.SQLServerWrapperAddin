@@ -36,9 +36,9 @@
         {
             this.tab1 = this.Factory.CreateRibbonTab();
             this.grpSQLServer = this.Factory.CreateRibbonGroup();
-            this.btnSetConnectionString = this.Factory.CreateRibbonButton();
             this.btnRefreshData = this.Factory.CreateRibbonButton();
             this.btnSetQuery = this.Factory.CreateRibbonButton();
+            this.btnSetConnectionString = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.grpSQLServer.SuspendLayout();
             this.SuspendLayout();
@@ -58,14 +58,6 @@
             this.grpSQLServer.Label = "SQL Server Interface";
             this.grpSQLServer.Name = "grpSQLServer";
             // 
-            // btnSetConnectionString
-            // 
-            this.btnSetConnectionString.Image = global::SQLServerWrapper.Properties.Resources.SetField_16x;
-            this.btnSetConnectionString.Label = "Edit / Set Connection";
-            this.btnSetConnectionString.Name = "btnSetConnectionString";
-            this.btnSetConnectionString.ShowImage = true;
-            this.btnSetConnectionString.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSetConnectionString_Click);
-            // 
             // btnRefreshData
             // 
             this.btnRefreshData.Image = global::SQLServerWrapper.Properties.Resources.Refresh_grey_16x;
@@ -81,6 +73,14 @@
             this.btnSetQuery.Name = "btnSetQuery";
             this.btnSetQuery.ShowImage = true;
             this.btnSetQuery.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSetQuery_Click);
+            // 
+            // btnSetConnectionString
+            // 
+            this.btnSetConnectionString.Image = global::SQLServerWrapper.Properties.Resources.SetField_16x;
+            this.btnSetConnectionString.Label = "Edit / Set Connection";
+            this.btnSetConnectionString.Name = "btnSetConnectionString";
+            this.btnSetConnectionString.ShowImage = true;
+            this.btnSetConnectionString.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSetConnectionString_Click);
             // 
             // SQLServer
             // 

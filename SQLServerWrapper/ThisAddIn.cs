@@ -25,6 +25,46 @@ namespace SQLServerWrapper
                 return Application.ActiveWorkbook;
             }
         }
+
+        private void SaveSettings(string ConnectionString,string SQLQuery)
+        {
+            try
+            {
+                Properties.Settings MySettings = new Properties.Settings();
+
+                MySettings.ConnectionString = ConnectionString;
+                MySettings.SQLQuery = SQLQuery;
+                MySettings.Save();
+
+            }
+            catch (Exception ex)
+            {
+               
+            }
+        }
+        private void LoadSettings()
+        {
+            //Load the settings here..
+            try
+            {
+                Properties.Settings MySettings = new Properties.Settings();
+
+                MySettings.Reload();
+                //txtServerName.Text = MySettings.Server;
+                //txtDatabaseName.Text = MySettings.Database;
+                //rbnWindowsAuthentication.Checked = MySettings.IntegratedSecurity;
+                //txtSQLUserID.Text = MySettings.SQLUserID;
+                //txtSQLPassword.Text = MySettings.SQLPassword;
+                //txtSQLQuery.Text = MySettings.SQLQuery;
+                //textBox1.Text = MySettings.SheetNames;
+
+            }
+            catch (Exception ex)
+            {
+               // MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             try

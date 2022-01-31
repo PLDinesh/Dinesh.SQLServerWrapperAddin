@@ -34,12 +34,50 @@ namespace SQLServerWrapper
         private SetSQLQuery setSQLQuery = null;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
+
+        private void SaveSettings(string ConnectionString, string SQLQuery)
+        {
+            try
+            {
+                Properties.Settings MySettings = new Properties.Settings();
+
+                MySettings.ConnectionString = ConnectionString;
+                MySettings.SQLQuery = SQLQuery;
+                MySettings.Save();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal(ex, "Error occured trying to save the settings.");
+            }
+        }
+        private void LoadSettings()
+        {
+            //Load the settings here..
+            try
+            {
+                Properties.Settings MySettings = new Properties.Settings();
+
+                MySettings.Reload();
+                ConnectionString = MySettings.ConnectionString;
+                SQLQuery = MySettings.SQLQuery;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal(ex, "Error occured when attempting load the saved settings.");
+            }
+        }
+
+
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
             try
             {
                 setConnection = new SetConnection();
                 setSQLQuery = new SetSQLQuery();
+
+
             }
             catch (Exception ex)
             {
