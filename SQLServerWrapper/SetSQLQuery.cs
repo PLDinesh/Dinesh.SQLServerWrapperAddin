@@ -25,6 +25,12 @@ namespace SQLServerWrapper
             InitializeComponent();
         }
 
+        public SetSQLQuery(string SQLQuery)
+        {
+            InitializeComponent();
+            textBox1.Text = SQLQuery;
+        }
+
         /// <summary>
         /// This public propery will hold the SQL query that will need to be parsed and executed
         /// </summary>

@@ -74,10 +74,13 @@ namespace SQLServerWrapper
         {
             try
             {
-                setConnection = new SetConnection();
-                setSQLQuery = new SetSQLQuery();
+               
 
                 LoadSettings();
+                setConnection = new SetConnection(ConnectionString);
+                setSQLQuery = new SetSQLQuery(SQLQuery);
+                setConnection.ConnectionString = ConnectionString;
+                setSQLQuery.SQLQuery = SQLQuery;
             }
             catch (Exception ex)
             {
@@ -188,6 +191,7 @@ namespace SQLServerWrapper
         {
             try
             {
+                setConnection.ConnectionString = ConnectionString;
                 setConnection.ShowDialog();
                 ConnectionString = setConnection.ConnectionString;
             }

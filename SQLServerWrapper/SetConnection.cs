@@ -22,6 +22,11 @@ namespace SQLServerWrapper
         {
             InitializeComponent();
         }
+        public SetConnection(string ConnectionString)
+        {
+            InitializeComponent();
+            txtConnectionString.Text = ConnectionString;
+        }
 
         /// <summary>
         /// 
@@ -30,9 +35,17 @@ namespace SQLServerWrapper
         /// <param name="e"></param>
         private void SetConnection_Load(object sender, EventArgs e)
         {
-            txtConnectionString.Text = "Server=(local);Initial Catalog=IVPPolaris;Integrated Security=true;Application Name=ExcelAddin";
-            btnSetConnection.Enabled = false;
-            btnTestConnection.Enabled = true;
+            if (string.IsNullOrEmpty(txtConnectionString.Text))
+            {
+                txtConnectionString.Text = "Server=(local);Initial Catalog=IVPPolaris;Integrated Security=true;Application Name=ExcelAddin";
+                btnSetConnection.Enabled = false;
+                btnTestConnection.Enabled = true;
+            }
+            else
+            {
+                btnSetConnection.Enabled = true;
+                btnTestConnection.Enabled = true;
+            }
         }
 
         /// <summary>
