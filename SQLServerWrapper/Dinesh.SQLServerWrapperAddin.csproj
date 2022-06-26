@@ -197,6 +197,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Content Include="Resources\SetField_16x.png" />
+    <None Include="Dinesh.SQLServerWrapperAddin_TemporaryKey.pfx" />
     <None Include="Resources\SetField_16x1.png" />
     <None Include="Resources\SetField_ActionGray_16x.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -250,7 +251,6 @@
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="SQLServerWrapper_TemporaryKey.pfx" />
     <None Include="ThisAddIn.Designer.xml">
       <DependentUpon>ThisAddIn.cs</DependentUpon>
     </None>
@@ -270,10 +270,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>SQLServerWrapper_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Dinesh.SQLServerWrapperAddin_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>02B6BF94E2B895CE7F90018B194D1E6AF1AD7DB5</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>A9A661E14378D88E53D700A36D6C1D2CDB2E8E26</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
